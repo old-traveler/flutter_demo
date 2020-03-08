@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -22,12 +21,13 @@ class ReduxState {
   String name;
   String password;
 
-  ReduxState(this.name, this.password);
+  ReduxState({this.name, this.password});
 }
 
 ReduxState appReducer(ReduxState state, action) {
   return ReduxState(
-      NameReducer(state.name, action), PasswordReducer(state.password, action));
+      name: NameReducer(state.name, action),
+      password: PasswordReducer(state.password, action));
 }
 
 final NameReducer = combineReducers<String>([
@@ -56,7 +56,7 @@ class UpdatePasswordAction {
 
 class MyReduxApp extends StatelessWidget {
   final store = new Store<ReduxState>(appReducer,
-      initialState: new ReduxState("未知", "123"));
+      initialState: new ReduxState(name: "未知", password: "123"));
 
   @override
   Widget build(BuildContext context) {
