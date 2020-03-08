@@ -62,66 +62,73 @@ class MyReduxApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider(
       store: store,
-      child: new MaterialApp(
-          home: Container(
-        color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            StoreConnector<ReduxState, String>(
-              converter: (store) => store.state.name,
-              builder: (context, name) {
-                return new Text(
-                  name,
-                  style: Theme.of(context).textTheme.display1,
-                );
-              },
-            ),
-            StoreConnector<ReduxState, String>(
-              converter: (store) => store.state.password,
-              builder: (context, password) {
-                return Text(password);
-              },
-            ),
-            StoreConnector<ReduxState, VoidCallback>(
-              converter: (store) {
-                return () => store.dispatch(UpdateNameAction("修改名字成功"));
-              },
-              builder: (context, callback) {
-                return FlatButton(
-                  child: Text("点击修改姓名"),
-                  onPressed: () {
-                    callback();
-                  },
-                );
-              },
-            ),
-            StoreConnector<ReduxState, VoidCallback>(
-              converter: (store) {
-                return () => store.dispatch(UpdatePasswordAction("修改密码成功"));
-              },
-              builder: (context, callback) {
-                return FlatButton(
-                  child: Text("点击修改密码"),
-                  onPressed: () {
-                    callback();
-                  },
-                );
-              },
-            ),
-            StoreConnector<ReduxState, Void>(
-              builder: (context, value) {
-                return FlatButton(
-                  child: Text("of方式修改密码"),
-                  onPressed: () {
-                    StoreProvider.of<ReduxState>(context)
-                        .dispatch(UpdatePasswordAction("通过of修改密码成功"));
-                  },
-                );
-              }, converter: (Store store) {return null;},
-            )
-          ],
-        ),
-      )),
+      child: new MaterialApp(home: ReduxDemo()),
+    );
+  }
+}
+
+class ReduxDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          StoreConnector<ReduxState, String>(
+            converter: (store) => store.state.name,
+            builder: (context, name) {
+              return new Text(
+                name,
+                style: Theme.of(context).textTheme.display1,
+              );
+            },
+          ),
+          Text(
+            //可以读取到当前状态的值，但是无法监听到状态的改变
+            StoreProvider.of<ReduxState>(context).state.name,
+            style: Theme.of(context).textTheme.display1,
+          ),
+          StoreConnector<ReduxState, String>(
+            converter: (store) => store.state.password,
+            builder: (context, password) {
+              return Text(password);
+            },
+          ),
+          StoreConnector<ReduxState, VoidCallback>(
+            converter: (store) {
+              return () => store.dispatch(UpdateNameAction("修改名字成功"));
+            },
+            builder: (context, callback) {
+              return FlatButton(
+                child: Text("点击修改姓名"),
+                onPressed: () {
+                  callback();
+                },
+              );
+            },
+          ),
+          StoreConnector<ReduxState, VoidCallback>(
+            converter: (store) {
+              return () => store.dispatch(UpdatePasswordAction("修改密码成功"));
+            },
+            builder: (context, callback) {
+              return FlatButton(
+                child: Text("点击修改密码"),
+                onPressed: () {
+                  callback();
+                },
+              );
+            },
+          ),
+          FlatButton(
+            child: Text("使用of方式修改密码"),
+            onPressed: () {
+              StoreProvider.of<ReduxState>(context)
+                  .dispatch(UpdatePasswordAction("通过of修改密码成功"));
+            },
+          )
+        ],
+      ),
     );
   }
 }
