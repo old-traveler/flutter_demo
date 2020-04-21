@@ -1,16 +1,13 @@
 # flutter_demo
 
-A new Flutter application.
+## router
+[Flutter 路由原理解析](https://juejin.im/post/5c8db8e8f265da2d864b889f)
+[Flutter 路由源码解析](https://juejin.im/post/5c8db8fff265da2de52dd80f)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## 绘制原理
+[Flutter-UI绘制解析](https://juejin.im/post/5c866cf6f265da2de165d89d)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 异步
+[Dart异步](https://juejin.im/post/5c4875f86fb9a049ff4e78cf)
+[异步编程](https://juejin.im/post/5c898b4af265da2de25bcc2d)
