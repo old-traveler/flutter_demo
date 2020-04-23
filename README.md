@@ -29,3 +29,6 @@
 * [Flutter注解生成router代码](https://juejin.im/post/5d49b4556fb9a06b317b4ab1)
 * [Dart代码生成器PART ONE](https://www.jianshu.com/p/3b9992b84e60?tdsourcetag=s_pctim_aiomsg)
 
+## Flutter aop
+* [Flutter aop](https://www.sohu.com/a/321449729_465959)
+
