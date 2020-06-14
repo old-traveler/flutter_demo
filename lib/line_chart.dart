@@ -6,13 +6,15 @@ import 'dart:ui' as ui;
 class LineChart extends StatelessWidget {
   final double step;
   final List<double> values;
+  final double strokeWidth;
 
-  const LineChart({Key key, this.step: 12, this.values}) : super(key: key);
+  const LineChart({Key key, this.step: 12, this.values, this.strokeWidth: 5})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: LineChartPainter(step, values),
+      painter: LineChartPainter(step, values, strokeWidth),
       size: Size(step * (values.length + 1),
           values.reduce((value, e) => max(value, e)) + 2.5 * step),
     );
@@ -22,8 +24,9 @@ class LineChart extends StatelessWidget {
 class LineChartPainter extends CustomPainter {
   final double step;
   final List<double> values;
+  final double strokeWidth;
 
-  LineChartPainter(this.step, this.values);
+  LineChartPainter(this.step, this.values, this.strokeWidth);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -49,8 +52,7 @@ class LineChartPainter extends CustomPainter {
     var paint = Paint()
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
-      ..isAntiAlias = true
-      ..strokeWidth = 1;
+      ..isAntiAlias = true;
     paint.shader =
         ui.Gradient.linear(Offset.zero, Offset(0, chartHeight), <Color>[
       Color(0xFFEF9A9A),
@@ -63,7 +65,7 @@ class LineChartPainter extends CustomPainter {
     ]);
     canvas.drawPath(path, paint);
 
-    paint.strokeWidth = 5;
+    paint.strokeWidth = strokeWidth;
     paint.shader = null;
     Color targetColor = Colors.red;
     for (int i = 1; i < values.length; i++) {
@@ -82,7 +84,7 @@ class LineChartPainter extends CustomPainter {
         Rect.fromLTWH(
             (values.length - 1) * step, size.height - step, step / 2, step / 2),
         paint);
-    paint.strokeWidth = step / 2;
+    paint.strokeWidth = strokeWidth;
     paint.style = PaintingStyle.stroke;
     canvas.drawCircle(
         Offset(values.length * step, chartHeight - values.last), step, paint);

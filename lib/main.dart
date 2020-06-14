@@ -32,48 +32,50 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Demo'),
-      ),
-      body: Container(
-        child: LineChart(values: <double>[
-          100,
-          90,
-          100,
-          110,
-          110,
-          100,
-          105,
-          130,
-          110,
-          120,
-          130,
-          140,
-          100,
-          90,
-          120,
-          120,
-          110,
-          100,
-          105,
-          130,
-          120,
-          130,
-          120,
-          100,
-          90,
-          120,
-          110,
-          100,
-          105,
-          120,
-          110,
-          130,
-          110
-        ]),
-        color: Colors.white,
-      )
-    );
+        appBar: AppBar(
+          title: Text('Demo'),
+        ),
+        body: Container(
+          child: LineChart(
+            values: <double>[
+              100,
+              90,
+              100,
+              110,
+              110,
+              100,
+              105,
+              130,
+              110,
+              120,
+              130,
+              140,
+              100,
+              90,
+              120,
+              120,
+              110,
+              100,
+              105,
+              130,
+              120,
+              130,
+              120,
+              100,
+              90,
+              120,
+              110,
+              100,
+              105,
+              120,
+              110,
+              110,
+              110
+            ],
+            strokeWidth: 3,
+          ),
+          color: Colors.white,
+        ));
   }
 }
 
