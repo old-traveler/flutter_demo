@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'line_chart.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -30,32 +32,48 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Demo'),
-        ),
-        body: Container(
-          child: ExpandedText(
-            inlineSpan: TextSpan(children: <InlineSpan>[
-              TextSpan(
-                text: '小胖子: ',
-                recognizer: TapGestureRecognizer(debugOwner: this)
-                  ..onTap = () => print('小胖 子'),
-                style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600),
-              ),
-              TextSpan(
-                recognizer: TapGestureRecognizer(debugOwner: this)
-                  ..onTap = () => print('户型通 透'),
-                text:
-                    '近地铁这一点比较好、整体性价比高、采光充足、户型通透、整体先待定，近地铁这一点比较好、整体性价比高、采光充足、户型通透、整体先待定近地铁这一点比较好、整体性价比高、采光充足、户型通透、整体先待定待采光充足、户型通透定待定足、户型通透、整体先待定，近地铁这一点比较好、整体性价比高、采光充足、户型通透、整体先待定近地铁这一点比较好、整体性价比高、采光充足、户型通透、整体先待定待采光充足、户型通透定待定',
-                style: TextStyle(fontSize: 13, color: Colors.black),
-              ),
-            ]),
-          ),
-          color: Color(0xFFF8F8F8),
-        ));
+      appBar: AppBar(
+        title: Text('Demo'),
+      ),
+      body: Container(
+        child: LineChart(values: <double>[
+          100,
+          90,
+          100,
+          110,
+          110,
+          100,
+          105,
+          130,
+          110,
+          120,
+          130,
+          140,
+          100,
+          90,
+          120,
+          120,
+          110,
+          100,
+          105,
+          130,
+          120,
+          130,
+          120,
+          100,
+          90,
+          120,
+          110,
+          100,
+          105,
+          120,
+          110,
+          130,
+          110
+        ]),
+        color: Colors.white,
+      )
+    );
   }
 }
 
@@ -106,17 +124,17 @@ class _ExpandedTextState extends State<ExpandedText> {
           return Text.rich(TextSpan(children: <InlineSpan>[
             widget.inlineSpan,
             WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
+                alignment: PlaceholderAlignment.middle,
                 child: Padding(
-              padding: EdgeInsets.only(left: 12),
-              child: GestureDetector(
-                child: Text(
-                  '收起',
-                  style: TextStyle(color: Colors.blue, fontSize: 13),
-                ),
-                onTap: () => setState(() => maxLines = widget.maxLines),
-              ),
-            ))
+                  padding: EdgeInsets.only(left: 12),
+                  child: GestureDetector(
+                    child: Text(
+                      '收起',
+                      style: TextStyle(color: Colors.blue, fontSize: 13),
+                    ),
+                    onTap: () => setState(() => maxLines = widget.maxLines),
+                  ),
+                ))
           ]));
         } else {
           return child;
