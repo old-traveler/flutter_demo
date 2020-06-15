@@ -91,7 +91,7 @@ class LineChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(LineChartPainter oldDelegate) {
+    return values != oldDelegate.values;
   }
 }
