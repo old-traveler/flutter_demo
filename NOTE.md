@@ -28,4 +28,4 @@
 结论
 * secondaryAnimation用于给栈顶元素改变时(非入栈或出栈)添加动画
 * 正常的入栈出栈不会触发secondaryAnimation
-* 同一元素animation 和 secondaryAnimation不会同时触发
+* 同一Route实例的animation 和 secondaryAnimation不会同时触发
