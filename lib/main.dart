@@ -1,4 +1,4 @@
-import 'package:flutter/gestures.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'line_chart.dart';
@@ -36,43 +36,11 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text('Demo'),
         ),
         body: Container(
+          alignment: Alignment.center,
           child: LineChart(
-            values: <double>[
-              100,
-              90,
-              100,
-              110,
-              110,
-              100,
-              105,
-              130,
-              110,
-              120,
-              130,
-              140,
-              100,
-              90,
-              120,
-              120,
-              110,
-              100,
-              105,
-              130,
-              120,
-              130,
-              120,
-              100,
-              90,
-              120,
-              110,
-              100,
-              105,
-              120,
-              110,
-              110,
-              110
-            ],
-            strokeWidth: 3,
+            size: Size(90 * 3.0, 34 * 3.0),
+            values: <double>[100, 90, 110, 100, 105, 110, 110],
+            strokeWidth: 2,
           ),
           color: Colors.white,
         ));

@@ -1,53 +1,66 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+import 'dart:math';
 
 class LineChart extends StatelessWidget {
-  final double step;
   final List<double> values;
   final double strokeWidth;
+  final Size size;
 
-  const LineChart({Key key, this.step: 12, this.values, this.strokeWidth: 5})
+  const LineChart({Key key, this.values, this.strokeWidth: 3, this.size})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: LineChartPainter(step, values, strokeWidth),
-      size: Size(step * (values.length + 1),
-          values.reduce((value, e) => max(value, e)) + 2.5 * step),
+      painter: LineChartPainter(values, strokeWidth),
+      size: Size(size.width, size.height + strokeWidth),
     );
   }
 }
 
 class LineChartPainter extends CustomPainter {
-  final double step;
-  final List<double> values;
+  final List<double> chartItems;
   final double strokeWidth;
 
-  LineChartPainter(this.step, this.values, this.strokeWidth);
+  LineChartPainter(this.chartItems, this.strokeWidth);
 
   @override
   void paint(Canvas canvas, Size size) {
+    double step = size.width / (chartItems.length - 1);
     Path path = Path();
-    double chartHeight = size.height - 1.5 * step;
+    Path linePath = Path();
+    double chartHeight = size.height - strokeWidth;
+    double maxValue = chartItems.reduce((value, item) => max(value, item));
+    List<double> values = chartItems
+        .map<double>((item) => item / maxValue * chartHeight)
+        ?.toList(growable: false);
+    chartHeight = size.height;
     path.moveTo(0, chartHeight);
-    for (int i = 0; i < values.length; i++) {
-      path.lineTo(i * step, chartHeight - values[i]);
+    path.lineTo(0, chartHeight - values.first);
+    linePath.moveTo(0, chartHeight - values.first);
+    for (int i = 1; i < values.length; i++) {
+      double startX1 = (i - 1) * step;
+      double startY1 = chartHeight - values[i - 1];
+      double startX2 = i * step;
+      double startY2 = chartHeight - values[i];
+      path.cubicTo(
+          (startX1 + startX2) / 2,
+          startY1, // control point 1
+          (startX1 + startX2) / 2,
+          startY2, //  control point 2
+          startX2,
+          startY2);
+      linePath.cubicTo(
+          (startX1 + startX2) / 2,
+          startY1, // control point 1
+          (startX1 + startX2) / 2,
+          startY2, //  control point 2
+          startX2,
+          startY2);
     }
-    Path newPath = Path();
-    newPath.arcTo(
-        Rect.fromCircle(
-            center: Offset(values.length * step, chartHeight - values.last),
-            radius: step),
-        pi / 2,
-        pi / 2,
-        false);
-    newPath.lineTo(values.length * step, chartHeight);
-    path.lineTo(values.length * step, chartHeight);
+    path.lineTo((values.length - 1) * step, chartHeight);
     path.close();
-    path.addPath(newPath, Offset.zero);
 
     var paint = Paint()
       ..strokeCap = StrokeCap.round
@@ -55,9 +68,9 @@ class LineChartPainter extends CustomPainter {
       ..isAntiAlias = true;
     paint.shader =
         ui.Gradient.linear(Offset.zero, Offset(0, chartHeight), <Color>[
-      Color(0xFFEF9A9A),
-      Color(0xFFFFCDD2),
-      Color(0xFFFFEBEE),
+      Color(0xFFEDF9F4),
+      Color(0xFFF7FFFC),
+      Color(0x00EDF9F4),
     ], <double>[
       0.3333,
       0.7777,
@@ -65,33 +78,28 @@ class LineChartPainter extends CustomPainter {
     ]);
     canvas.drawPath(path, paint);
 
-    paint.strokeWidth = strokeWidth;
-    paint.shader = null;
-    Color targetColor = Colors.red;
-    for (int i = 1; i < values.length; i++) {
-      paint.style = PaintingStyle.stroke;
-      paint.color =
-          targetColor.withAlpha(55 + i * (200.0 ~/ (values.length - 1)));
-      final start = Offset((i - 1) * step, chartHeight - values[i - 1]);
-      final end = Offset(i * step, chartHeight - values[i]);
-      canvas.drawLine(start, end, paint);
-      paint.style = PaintingStyle.fill;
-      canvas.drawRect(
-          Rect.fromLTWH((i - 1) * step, size.height - step, step / 2, step / 2),
-          paint);
-    }
-    canvas.drawRect(
-        Rect.fromLTWH(
-            (values.length - 1) * step, size.height - step, step / 2, step / 2),
-        paint);
-    paint.strokeWidth = strokeWidth;
-    paint.style = PaintingStyle.stroke;
-    canvas.drawCircle(
-        Offset(values.length * step, chartHeight - values.last), step, paint);
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..shader = ui.Gradient.linear(Offset(0, chartHeight / 2),
+          Offset((values.length - 1) * step, chartHeight / 2), <Color>[
+        Color(0x5600A75B),
+        Color(0xFF00A75B),
+        Color(0xFF00A75B),
+        Color(0x5600A75B),
+        Color(0x0000A75B),
+      ], <double>[
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ]);
+    canvas.drawPath(linePath, paint);
   }
 
   @override
   bool shouldRepaint(LineChartPainter oldDelegate) {
-    return values != oldDelegate.values;
+    return chartItems != oldDelegate.chartItems;
   }
 }
