@@ -83,13 +83,13 @@ class LineChartPainter extends CustomPainter {
       ..strokeWidth = strokeWidth
       ..shader = ui.Gradient.linear(Offset(0, chartHeight / 2),
           Offset((values.length - 1) * step, chartHeight / 2), <Color>[
-        Color(0x5600A75B),
-        Color(0xFF00A75B),
+        Color(0x0000A75B),
+        Color(0xa000A75B),
         Color(0xFF00A75B),
         Color(0x5600A75B),
         Color(0x0000A75B),
       ], <double>[
-        0.2,
+        0.01,
         0.4,
         0.6,
         0.8,
