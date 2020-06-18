@@ -7,7 +7,7 @@ class LineChart extends StatelessWidget {
   final double strokeWidth;
   final Size size;
 
-  const LineChart({Key key, this.values, this.strokeWidth: 3, this.size})
+  const LineChart({Key key, this.values, this.strokeWidth: 2, this.size})
       : super(key: key);
 
   @override
