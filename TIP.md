@@ -10,3 +10,13 @@
       );
   }
 ```
+```
+  final controller = scaffoldState.showBottomSheet<T>((_) {
+      return Padding(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(scaffoldState.context).padding.bottom),
+        child: child,
+      );
+   }, backgroundColor: backgroundColor);
+```
+
