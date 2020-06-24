@@ -32,3 +32,26 @@
         return maxDis >= nums.length - 1;
     }
 ```
+### [加一](https://leetcode-cn.com/problems/plus-one/)
+```
+    public int[] plusOne(int[] digits) {
+        int index = digits.length;
+        boolean canPlus = false;
+        while (index > 0 && !canPlus) {
+            index--;
+            canPlus = digits[index] + 1 < 10;
+        }
+        int[] res;
+        if (canPlus) {
+            digits[index] = digits[index] + 1;
+            res = digits;
+        } else {
+            res = new int[digits.length + 1];
+            res[0] = 1;
+        }
+        for (int i = index + 1; i < res.length; i++) {
+            res[i] = 0;
+        }
+        return res;
+    }
+```
