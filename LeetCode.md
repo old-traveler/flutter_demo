@@ -55,3 +55,28 @@
         return res;
     }
 ```
+### [搜索二维矩阵](https://leetcode-cn.com/problems/search-a-2d-matrix/)
+```
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        if(m == 0) return false;
+        int n = matrix[0].length;
+        int left = 0;
+        int right = m * n;
+        int mid;
+       while (left < right) {
+            mid = (left + right) >> 1;
+            int temp = matrix[mid / n][mid % n];
+            if (temp == target) {
+                return true;
+            } else if (mid == left) {
+                break;
+            } else if (temp < target) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        return false;
+    }
+```
