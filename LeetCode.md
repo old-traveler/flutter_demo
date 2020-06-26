@@ -80,3 +80,28 @@
         return false;
     }
 ```
+### [颜色分类](https://leetcode-cn.com/problems/sort-colors/)
+```
+    public void sortColors(int[] nums) {
+        if (nums == null || nums.length < 2) {
+            return;
+        }
+        int redCount = 0;
+        int blueCount = 0;
+        for (int i = 0; i < nums.length - blueCount; i++) {
+            if (nums[i] == 0) {
+                int temp = nums[redCount];
+                nums[redCount] = nums[i];
+                nums[i] = temp;
+                redCount++;
+            } else if (nums[i] == 2) {
+                int temp = nums[nums.length - blueCount - 1];
+                nums[nums.length - blueCount - 1] = nums[i];
+                nums[i] = temp;
+                blueCount++;
+                // 右侧交换过来的,也需要判断一下
+                i--;
+            }
+        }
+    }
+```
