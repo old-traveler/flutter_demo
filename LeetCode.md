@@ -105,3 +105,28 @@
         }
     }
 ```
+### [交错字符串](https://leetcode-cn.com/problems/interleaving-string/submissions/)
+```
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int length1 = s1.length();
+        int length2 = s2.length();
+        int length3 = s3.length();
+        if (length1 + length2 != length3) return false;
+        boolean[][] dp = new boolean[length1 + 1][length2 + 1];
+        dp[0][0] = true;
+        for (int i = 1; i < length1 + 1; i++) {
+            dp[i][0] = dp[i - 1][0] && s1.charAt(i - 1) == s3.charAt(i - 1);
+        }
+        for (int j = 1; j < length2 + 1; j++) {
+            dp[0][j] = dp[0][j - 1] && s2.charAt(j - 1) == s3.charAt(j - 1);
+        }
+        for (int i = 1; i < length1 + 1; i++) {
+            for (int j = 1; j < length2 + 1; j++) {
+                // 一定要把dp的判断放在字符判断之前减少不必要字符判断,时间能减少70%
+                dp[i][j] = dp[i - 1][j] && s3.charAt(i + j - 1) == s1.charAt(i - 1)
+                        || dp[i][j - 1] && s3.charAt(i + j - 1) == s2.charAt(j - 1);
+            }
+        }
+        return dp[length1][length2];
+    }
+```
