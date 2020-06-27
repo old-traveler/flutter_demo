@@ -106,6 +106,8 @@
     }
 ```
 ### [交错字符串](https://leetcode-cn.com/problems/interleaving-string/submissions/)
+
+tip: 慎用charAt
 ```
     public boolean isInterleave(String s1, String s2, String s3) {
         int length1 = s1.length();
