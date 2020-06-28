@@ -132,3 +132,107 @@ tip: 慎用charAt
         return dp[length1][length2];
     }
 ```
+
+### 全排序
+```
+    private List<String> res;
+    private Set<Integer> hasPicked;
+
+    private void backTrack(int n) {
+        for (int i = 1; i <= n; i++) {
+            if (!hasPicked.contains(i)) {
+                hasPicked.add(i);
+                if (hasPicked.size() == n) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (Integer integer : hasPicked) {
+                        stringBuilder.append(integer).append(" ");
+                    }
+                    res.add(stringBuilder.toString());
+                } else {
+                    backTrack(n);
+                }
+                hasPicked.remove(i);
+            }
+        }
+    }
+
+    public List<String> allSort(int n) {
+        res = new ArrayList<>();
+        hasPicked = new LinkedHashSet<>();
+        backTrack(n);
+        return this.res;
+    }
+```
+
+### [N皇后](https://leetcode-cn.com/problems/n-queens/)
+全排序和N皇后的问题都是可以通过回溯法去解决的,
+回溯法的固有套路就是在递归选择之前先做选择然后递归选择之后再撤销选择
+```
+    List<List<String>> res;
+    int[] queens;
+    int[] hill; // 斜对角线
+    int[] dale; // 主对角线
+    int[] rows;
+    int n;
+
+    private boolean canPlace(int row, int col) {
+        return (rows[col] + hill[row + col] + dale[row - col + n]) == 0;
+    }
+
+    private void placeQueens(int row, int col) {
+        this.queens[row] = col;
+        this.hill[row + col] = 1;
+        this.dale[row - col + n] = 1;
+        this.rows[col] = 1;
+    }
+
+    private void removeQueens(int row, int col) {
+        this.queens[row] = 0;
+        this.hill[row + col] = 0;
+        this.dale[row - col + n] = 0;
+        this.rows[col] = 0;
+    }
+
+    private void addSolution() {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < n; j++) {
+                if (j == queens[i]) {
+                    stringBuilder.append('Q');
+                } else {
+                    stringBuilder.append('.');
+                }
+            }
+            list.add(stringBuilder.toString());
+        }
+        res.add(list);
+    }
+
+    private void backTrack(int row) {
+        for (int col = 0; col < n; col++) {
+            if (canPlace(row, col)) {
+                placeQueens(row, col);
+                if (row + 1 == n) {
+                    addSolution();
+                } else {
+                    backTrack(row + 1);
+                }
+                removeQueens(row, col);
+            }
+        }
+    }
+
+
+    public List<List<String>> solveNQueens(int n) {
+        this.res = new ArrayList<>();
+        this.n = n;
+        this.rows = new int[n];
+        this.hill = new int[2 * n];
+        this.dale = new int[2 * n];
+        this.queens = new int[n];
+        backTrack(0);
+
+        return this.res;
+    }
+```
