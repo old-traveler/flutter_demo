@@ -236,3 +236,47 @@ tip: 慎用charAt
         return this.res;
     }
 ```
+
+### [N皇后II](https://leetcode-cn.com/problems/n-queens-ii/)
+
+```
+    boolean[] rows;
+    boolean[] hills;
+    boolean[] dales;
+    int n;
+    int count;
+
+    private boolean canPlace(int row, int col){
+        return !(rows[col] || hills[row + col] || dales[row - col + n]);
+    }
+
+    private void placeOrRemove(int row, int col,boolean place){
+        rows[col] = place;
+        hills[row + col] = place;
+        dales[row - col + n] = place;
+    }
+
+    private void backTrack(int row){
+        for(int i = 0; i < n; i++){
+            if(canPlace(row, i)){
+                placeOrRemove(row, i, true);
+                if(row + 1 == n){
+                    count ++;
+                } else {
+                    backTrack(row + 1);
+                }
+                placeOrRemove(row, i, false);
+            }
+        }
+    }
+
+    public int totalNQueens(int n) {
+        this.n = n;
+        count = 0;
+        rows = new boolean[n];
+        hills = new boolean[2 * n];
+        dales = new boolean[2 * n];
+        backTrack(0);
+        return count;
+    }
+```
