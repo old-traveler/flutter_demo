@@ -313,6 +313,8 @@ tip: 慎用charAt
         // 处理边界
         mid = Math.max(0, Math.min(mid, intervals.length - 1));
         if(intervals[mid][0] < newInterval[0]){
+            // 如果二分查找没有找到相等的值,并且下标对应值比插入数组值大,则mid++
+            // 这是为了保证插入的位置一定是符合大于左边,小于等于右边的原则
             mid ++;
         } 
         List<int[]> res = new ArrayList<>();
