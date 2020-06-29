@@ -280,3 +280,55 @@ tip: 慎用charAt
         return count;
     }
 ```
+
+### [插入区间](https://leetcode-cn.com/problems/insert-interval/)
+```
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        // 解法思路,将newInterval当作intervals数组中的一个,完成区间合并即可
+        // 通过二分查找找到对应的下标位置,在循环的时候将下标为插入数组的下标一致的
+        // 数组换成插入数组进行合并,然后将后续的数组下标前移一保证都遍历到
+        if(intervals == null || intervals.length == 0)return new int[][]{ newInterval };
+        Arrays.sort(intervals, new Comparator<int[]>(){
+            public int compare(int[] o1,int[] o2){
+                return o1[0] == o2[0] ? 0 : o1[0] - o2[0];
+            }
+        });
+        int left = 0;
+        int right = intervals.length - 1;
+        int mid = 0;
+        // 通过二分查找找出对应的插入下标
+        while(left <= right){
+            mid = (left + right) >> 1;
+            if(intervals[mid][0] < newInterval[0]){
+                left = mid + 1;
+            } else if(intervals[mid][0] > newInterval[0]){
+                right = mid - 1;
+            } else {
+                if(newInterval[1] > intervals[mid][1]){
+                    mid ++;
+                }
+                break;
+            }
+        }
+        // 处理边界
+        mid = Math.max(0, Math.min(mid, intervals.length - 1));
+        if(intervals[mid][0] < newInterval[0]){
+            mid ++;
+        } 
+        List<int[]> res = new ArrayList<>();
+        left = Math.min(intervals[0][0], newInterval[0]);
+        right = Math.min(intervals[0][1], newInterval[1]);
+        for(int i = 0; i <= intervals.length; i++){
+            int[] array = i == mid ? newInterval : (i > mid ? intervals[i - 1] : intervals[i]);
+            if(right >= array[0]){
+                right = Math.max(right, array[1]);
+            } else {
+                res.add(new int[]{left, right});
+                left = array[0];
+                right = array[1];
+            }
+        }
+        res.add(new int[]{left, right});
+        return res.toArray(new int[res.size()][2]);
+    }
+```
