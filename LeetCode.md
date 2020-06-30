@@ -334,3 +334,18 @@ tip: 慎用charAt
         return res.toArray(new int[res.size()][2]);
     }
 ```
+### [删除排序链表中的重复元素](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/submissions/)
+```
+ public ListNode deleteDuplicates(ListNode head) {
+        ListNode node = head;
+        while(node != null){
+            ListNode next = node.next;
+            while(next != null && next.val == node.val){
+                next = next.next;
+            }
+            node.next = next;
+            node = node.next;
+        }
+        return head;
+    }
+```
