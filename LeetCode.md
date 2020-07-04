@@ -371,3 +371,32 @@ tip: 慎用charAt
         return dp[n - 1];
     }
 ```
+### [最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+```
+    public String minWindow(String s, String t) {
+        if (s == null || t == null || s.length() < t.length()) return "";
+        int[] map = new int[256];
+        int left = 0;
+        int right = 0;
+        int start = 0;
+        int end = Integer.MAX_VALUE;
+        int count = t.length();
+        for (char c : t.toCharArray())
+            map[c]++;
+        while (right < s.length()) {
+            char temp = s.charAt(right);
+            right++;
+            if (--map[temp] >= 0) {
+                count--;
+            }
+            while (count == 0 && map[s.charAt(left)] < 0) {
+                ++map[s.charAt(left++)];
+            }
+            if (count == 0 && (end - start > right - left)) {
+                start = left;
+                end = right;
+            }
+        }
+         return count == 0 ? s.substring(start, end) : "";
+    }
+```
