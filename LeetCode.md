@@ -282,6 +282,7 @@ tip: 慎用charAt
 ```
 
 ### [插入区间](https://leetcode-cn.com/problems/insert-interval/)
+滑动窗口
 ```
     public int[][] insert(int[][] intervals, int[] newInterval) {
         // 解法思路,将newInterval当作intervals数组中的一个,完成区间合并即可
@@ -335,6 +336,7 @@ tip: 慎用charAt
     }
 ```
 ### [删除排序链表中的重复元素](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/submissions/)
+常规
 ```
  public ListNode deleteDuplicates(ListNode head) {
         ListNode node = head;
@@ -351,6 +353,7 @@ tip: 慎用charAt
 ```
 
 ### [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)
+动态规划
 ```
     public int minPathSum(int[][] grid) {
         if(grid == null || grid.length == 0) return 0;
@@ -372,6 +375,7 @@ tip: 慎用charAt
     }
 ```
 ### [最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+滑动窗口
 ```
     public String minWindow(String s, String t) {
         if (s == null || t == null || s.length() < t.length()) return "";
