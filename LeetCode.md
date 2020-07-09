@@ -56,6 +56,7 @@
     }
 ```
 ### [搜索二维矩阵](https://leetcode-cn.com/problems/search-a-2d-matrix/)
+二分搜索
 ```
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;
