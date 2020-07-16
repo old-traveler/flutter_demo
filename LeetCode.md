@@ -405,3 +405,19 @@ tip: 慎用charAt
          return count == 0 ? s.substring(start, end) : "";
     }
 ```
+[只出现一次的数字](https://leetcode-cn.com/problems/single-number-ii/)
+```
+class Solution {
+    public int singleNumber(int[] nums) {
+        //记录第一次出现的数字
+        int one = 0;
+        //记录第二次出现的数字
+        int two = 0;
+        for(int num : nums){
+            one = ~two & (one ^ num);
+            two = ~one & (two ^ num);
+        }
+        return one;
+    }
+}
+```
