@@ -451,9 +451,9 @@ class Solution {
 ```
 
 ### [最大单词长度乘积](https://leetcode-cn.com/problems/maximum-product-of-word-lengths/)
-思路：将每个String中包含的字符转化成二进制中的某位上的1，用于之后根据&来判断时候有相同字符
+思路：将每个String中包含的字符转化成二进制中的某位上的1，用于之后根据&来判断是否有相同字符。
 因为会出现ab和aabb这种，所以需要传入最大长度的标志位，之后将map中的keySet，两两对比，找出
-不含相同字符的两个字符串最大的长度积
+不含相同字符的两个字符串的最大的长度积
 ```
     public int maxProduct(String[] words) {
         HashMap<Integer, Integer> map = new HashMap<>();
