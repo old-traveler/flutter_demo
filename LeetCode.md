@@ -421,3 +421,30 @@ class Solution {
     }
 }
 ```
+[只出现一次的数字III](https://leetcode-cn.com/problems/single-number-iii/submissions/)
+思路：全部数字异或之后，得出的结果即是两个只出现一次的数字的异或，这两个肯定有一位是不一样的，借助这个特点
+找出不同的位数，借此将整个数组分成两份，并且这两个只出现一次会各在一个分组，这两个新分组每个只有一个出现一次的数字
+这就能通过异或提取出来
+```
+    public int[] singleNumber(int[] nums) {
+        int xorRes = 0;
+        for(int i : nums){
+            xorRes ^= i;
+        }
+        int temp = 1;
+        while((xorRes & 1) != 1){
+            temp <<= 1;
+            xorRes >>= 1;
+        }
+        int x = 0;
+        int y = 0;
+        for(int i : nums){
+            if((i & temp) > 0){
+                x ^= i;
+            } else {
+                y ^= i;
+            }
+        }
+        return new int[]{x,y};
+    }
+```
