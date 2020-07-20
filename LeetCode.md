@@ -405,7 +405,7 @@ tip: 慎用charAt
          return count == 0 ? s.substring(start, end) : "";
     }
 ```
-[只出现一次的数字](https://leetcode-cn.com/problems/single-number-ii/)
+### [只出现一次的数字](https://leetcode-cn.com/problems/single-number-ii/)
 ```
 class Solution {
     public int singleNumber(int[] nums) {
@@ -421,7 +421,8 @@ class Solution {
     }
 }
 ```
-[只出现一次的数字III](https://leetcode-cn.com/problems/single-number-iii/submissions/)
+### [只出现一次的数字III](https://leetcode-cn.com/problems/single-number-iii/submissions/)
+
 思路：全部数字异或之后，得出的结果即是两个只出现一次的数字的异或，这两个肯定有一位是不一样的，借助这个特点
 找出不同的位数，借此将整个数组分成两份，并且这两个只出现一次会各在一个分组，这两个新分组每个只有一个出现一次的数字
 这就能通过异或提取出来
@@ -447,4 +448,35 @@ class Solution {
         }
         return new int[]{x,y};
     }
+```
+
+### [最大单词长度乘积](https://leetcode-cn.com/problems/maximum-product-of-word-lengths/)
+思路：将每个String中包含的字符转化成二进制中的某位上的1，用于之后根据&来判断时候有相同字符
+因为会出现ab和aabb这种，所以需要传入最大长度的标志位，之后将map中的keySet，两两对比，找出
+不含相同字符的两个字符串最大的长度积
+```
+    public int maxProduct(String[] words) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            String single = words[i];
+            char[] array = single.toCharArray();
+            int sign = 0;
+            for (char c : array) {
+                int bit = c - 'a';
+                sign |= 1 << bit;
+            }
+            map.put(sign, Math.max(array.length, map.getOrDefault(sign, 0)));
+        }
+        Set<Integer> set = map.keySet();
+        int maxPro = 0;
+        for (int i : set) {
+            for (int j : set) {
+                if ((i & j) == 0) {
+                    maxPro = Math.max(maxPro, map.get(i) * map.get(j));
+                }
+            }
+        }
+        return maxPro;
+    }
+
 ```
