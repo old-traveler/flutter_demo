@@ -480,3 +480,32 @@ class Solution {
     }
 
 ```
+
+### [子集](https://leetcode-cn.com/problems/subsets/)
+```
+class Solution {
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> selected = new LinkedList<>();
+
+    public List<List<Integer>> subsets(int[] nums) {
+        res.clear();
+        selected.clear();
+        int length = nums.length;
+        for(int i = 0; i <= length; i++)
+        backTrack(0, i, nums, length);
+        return res;
+    }
+
+    void backTrack(int start,int k,int[] nums,int length){
+        if(selected.size() == k){
+            res.add(new LinkedList(selected));
+            return;
+        } 
+        for(int i = start; i < length; i++){
+            selected.add(nums[i]);
+            backTrack(i + 1, k, nums, length);
+            selected.removeLast();
+        }
+    }
+}
+```
