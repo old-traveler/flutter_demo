@@ -509,3 +509,34 @@ class Solution {
     }
 }
 ```
+
+### []()
+```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+
+    int maxLength = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        maxLength = Integer.MIN_VALUE;
+        return Math.max(maxPath(root),maxLength);
+    }
+
+    private int maxPath(TreeNode root){
+        if(root == null) return 0;
+        int maxLeft = Math.max(maxPath(root.left), 0);
+        int maxRight = Math.max(maxPath(root.right), 0);
+        int res = Math.max(maxLeft + maxRight + root.val, root.val);
+        maxLength = Math.max(res, maxLength);
+        // 因为路径是不能回退的，所以路径只能选左右子数的一条
+        return Math.max(maxLeft, maxRight) + root.val;
+    }
+}
+```
