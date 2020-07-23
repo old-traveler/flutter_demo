@@ -562,3 +562,48 @@ public TreeNode buildTree(int[] preorder, int[] inorder) {
         return node;
     }
 ```
+
+### [恢复二叉搜索树](https://leetcode-cn.com/problems/recover-binary-search-tree/)
+思路： 以排序的思想，进行中序遍历，找出两个不满足，升序规则的点，然后进行交互值即可
+注意：因为交换之后可能会导致连续的两个次不满足判断条件，其中第一次出现的t1和最后一次出现的t2则为需要交换的值
+```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    TreeNode pre,t1,t2;
+    public void recoverTree(TreeNode root) {
+        midOrder(root);
+        swap(t1,t2);
+    }
+
+    private void midOrder(TreeNode root){
+        if(root == null) return;
+        midOrder(root.left);
+        if(pre != null && pre.val > root.val){
+            if(t1 == null) t1 = pre;
+            t2 = root;
+        }
+        pre = root;
+        midOrder(root.right);
+    }
+    
+    private void swap(TreeNode a, TreeNode b){
+        int temp = a.val;
+        a.val = b.val;
+        b.val = temp;
+    }
+}
+```
