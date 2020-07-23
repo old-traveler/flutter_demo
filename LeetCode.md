@@ -510,7 +510,10 @@ class Solution {
 }
 ```
 
-### []()
+### [二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
+思路: 利用递归查找左右子数的最大路径和，并且记录下最大的路径和，注意一点的就是在递归返回的时候
+不是返回当前子数的最大路径和，而是，子树到当前节点的父节点的最大路径和，因为只能走一次当前节点并到达当前节点
+的父节点，所以只能取左右子数最大路径和加上当前节点的值返回
 ```
 /**
  * Definition for a binary tree node.
@@ -539,4 +542,23 @@ class Solution {
         return Math.max(maxLeft, maxRight) + root.val;
     }
 }
+```
+### [从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+思路： 利用前序遍历和中序遍历的特点，划分出左右子数的前序遍历和中序遍历范围，以此类推重建二叉树
+```
+public TreeNode buildTree(int[] preorder, int[] inorder) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++)
+            hashMap.put(inorder[i], i);
+        return _buildTree(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, hashMap);
+    }
+
+    public TreeNode _buildTree(int[] preorder, int preStartIndex, int preEndIndex, int[] inorder, int inStartIndex, int inEndIndex, HashMap<Integer, Integer> hashMap) {
+        if (preStartIndex > preEndIndex || inStartIndex > inEndIndex) return null;
+        TreeNode node = new TreeNode(preorder[preStartIndex]);
+        int inIndex = hashMap.get(node.val);
+        node.left = _buildTree(preorder, preStartIndex + 1, preStartIndex + (inIndex - inStartIndex), inorder, inStartIndex, inIndex - 1, hashMap);
+        node.right = _buildTree(preorder, preStartIndex + (inIndex - inStartIndex) + 1, preEndIndex, inorder, inIndex + 1, inEndIndex, hashMap);
+        return node;
+    }
 ```
