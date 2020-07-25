@@ -608,7 +608,8 @@ class Solution {
 }
 ```
 
-### [86. 分隔链表](https://leetcode-cn.com/problems/partition-list/submissions/)
+### [分隔链表](https://leetcode-cn.com/problems/partition-list/submissions/)
+思路：新定义两个链表的Header，将小于x和大于等于x的值分成两个链表最后将两个链表合并即可
 ```
 /**
  * Definition for singly-linked list.
