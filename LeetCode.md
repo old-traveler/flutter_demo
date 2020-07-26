@@ -641,3 +641,50 @@ class Solution {
     }
 }
 ```
+
+### [反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null || head.next == null) return head;
+        // 反转后的头部节点
+        ListNode reverseHead = null;
+        // 当前遍历节点
+        ListNode node = head;
+        // 反转后头部的的前一个节点
+        ListNode reverseHeadBefore = null;
+        int i = 1;
+        while(node != null){
+            ListNode next = node.next;
+            if(i == m - 1) {
+                reverseHeadBefore = node;
+            } else if (i >= m && i <= n) {
+                node.next = reverseHead;
+                reverseHead = node;
+            }
+            if(i == n) {
+                if(reverseHeadBefore != null) {
+                    reverseHeadBefore.next.next = next;
+                    reverseHeadBefore.next = reverseHead;
+                    return head;
+                } else {
+                    // 特殊情况，即 1 == n 时，反转后的头部就为整个链表的新头部
+                    head.next = next;
+                    return reverseHead;
+                }
+            }
+            node = next;
+            i++;
+        }
+        return null;
+    }
+}
+```
