@@ -688,3 +688,31 @@ class Solution {
     }
 }
 ```
+
+### [解码方法](https://leetcode-cn.com/problems/decode-ways/submissions/)
+```
+class Solution {
+    public int numDecodings(String s) {
+        if(s == null || s.length() == 0 || s.charAt(0) == '0') return 0;
+        char[] arrays = s.toCharArray();
+        int before = 1;
+        int before2 = 0;
+        for(int i = 0; i < arrays.length; i++){
+            // 当前字符为`0`时无法通过前i-1个字符 + `0`来编码，所以count取0
+            int count = arrays[i] == '0' ? 0 : before;
+            if(i > 0 && canSingleLetter(arrays, i)){
+                count += (i <= 1 ? 1 : before2);
+            }
+            before2 = before;
+            before = count;
+        }
+        return before;
+    }
+
+    // 连续两个字符是否能由一个字母编码
+    private boolean canSingleLetter(char[] arrays, int index){
+        int code = (arrays[index - 1] - '0') * 10 + (arrays[index] - '0');
+        return 10 <= code && code <= 26;
+    }
+}
+```
