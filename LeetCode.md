@@ -717,7 +717,7 @@ class Solution {
 }
 ```
 
-[101. 对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/submissions/)
+### [101. 对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/submissions/)
 ```
 /**
  * Definition for a binary tree node.
