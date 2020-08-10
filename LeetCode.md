@@ -716,3 +716,31 @@ class Solution {
     }
 }
 ```
+
+[101. 对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/submissions/)
+```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null)return true;
+        return _isSymmetric(root.left, root.right);
+    }
+
+    private boolean _isSymmetric(TreeNode left, TreeNode right){
+        if(left == null && right == null){
+            return true;
+        } else if(left == null || right == null){
+            return false;
+        }
+        return left.val == right.val &&_isSymmetric(left.left,right.right) && _isSymmetric(left.right,right.left);
+    }
+}
+```
