@@ -772,3 +772,45 @@ class Solution {
     }
 }
 ```
+
+### [109. 有序链表转换二叉搜索树](https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/submissions/)
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head == null) return null;
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode slowBefore = null;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slowBefore = slow;
+            slow = slow.next;
+        }
+        if (slowBefore != null) {
+            slowBefore.next = null;
+        }
+        TreeNode node = new TreeNode(slow.val);
+        // 如果head == slow 则表明无左子树
+        node.left = head == slow ? null : sortedListToBST(head);
+        node.right = sortedListToBST(slow.next);
+        return node;
+    }
+}
+```
